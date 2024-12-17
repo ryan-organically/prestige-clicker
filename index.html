@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multiplier & Prestige Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background-color: #f4f4f4;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      cursor: pointer;
+    }
+    h1 {
+      color: #333;
+    }
+    p {
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Multiplier & Prestige Calculator</h1>
+  <p><strong>Points:</strong> <span id="points">0</span></p>
+  <p><strong>Multiplier:</strong> <span id="multiplier">1</span>x</p>
+  <p><strong>Prestiges:</strong> <span id="prestiges">0</span></p>
+
+  <button onclick="gainPoints()">Gain Points</button>
+  <button onclick="buyMultiplier()">Buy Multiplier (Cost: <span id="multCost">10</span>)</button>
+  <button onclick="prestige()">Prestige Reset</button>
+
+  <script>
+    let points = 0;
+    let multiplier = 1;
+    let multiplierCost = 10;
+    let prestiges = 0;
+
+    function gainPoints() {
+      points += multiplier;
+      updateDisplay();
+    }
+
+    function buyMultiplier() {
+      if (points >= multiplierCost) {
+        points -= multiplierCost;
+        multiplier *= 2;
+        multiplierCost = Math.ceil(multiplierCost * 1.5);
+        updateDisplay();
+      } else {
+        alert("Not enough points to buy multiplier!");
+      }
+    }
+
+    function prestige() {
+      if (points >= 1e100) { // Check for Googol
+        prestiges++;
+        multiplier = 1;
+        points = 0;
+        multiplierCost = 10;
+        alert(`Prestige achieved! Total Prestiges: ${prestiges}`);
+        updateDisplay();
+      } else {
+        alert("Reach Googol points (1e100) to prestige!");
+      }
+    }
+
+    function updateDisplay() {
+      document.getElementById("points").innerText = points.toExponential(2);
+      document.getElementById("multiplier").innerText = multiplier.toExponential(2);
+      document.getElementById("multCost").innerText = multiplierCost;
+      document.getElementById("prestiges").innerText = prestiges;
+    }
+
+    updateDisplay();
+  </script>
+</body>
+</html>
